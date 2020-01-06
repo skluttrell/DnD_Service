@@ -1,0 +1,29 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+	<title>
+		{% if title %}
+			{{ title }} - D&#38;D Service
+		{% else %}
+			Welcome to D&#38;D Service!
+		{% endif %}
+	</title>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script>
+		function convert(text) {
+			text = text.replace(/&gt;/g, ">");
+			text = text.replace(/&lt;/g, "<");
+			text = text.replace(/&amp;/g, "&");
+			return text;
+		};
+
+		{% block script_content %}{% endblock %}
+	</script>
+</head>
+
+<body>
+	{% block app_content %}{% endblock %}
+</body>
+</html>

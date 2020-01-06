@@ -1,0 +1,22 @@
+﻿{% extends "base.html" %}
+
+{% block script_content %}
+	$(document).ready(function() {
+		$("#spell_description").html(convert("{{ description }}"));
+	});
+{% endblock %}
+
+{% block app_content %}
+	<h2>{{ name }}</h2>
+	<ul style="list-style: none;">
+		<li>{% if level > 0 %}{{ level }}{% if level == 1 %}st{% elif level == 2 %}nd{% elif level == 3 %}rd{% else %}th{% endif %}-level{% else %}<span style="text-transform: capitalize;">{% endif %}
+			{{ school }}{% if level == 0 %}</span> cantrip{% endif %}
+			{% if ritual %}(ritual){% endif %}</li>
+		<li>Casting time: {{ castingtime }}</li>
+		<li>Range: {% if range == -3 %}unlimited{% elif range == -2 %}sight{% elif range == -1 %}touch{% elif range == 0 %}self{% elif 0 < range < 5280 %}{{ range }} ft.{% else %}{{ (range / 5280)|int }} mile{% if range > 5280 %}s{% endif %}{% endif %}
+			{% if not area_of_effect == None %}({{ area_of_effect }}){% endif %}</li>
+		<li>Components: {% if verbal %}V{% endif %}{% if somatic %}, S{% endif %}{% if not materials == None %}, M ({{ materials }}){% endif %}</li>
+		<li>Duration: {% if concentration %}concentration, up to {% endif %}{{ duration }}</li>
+	</ul><br />
+	<div id="spell_description"></div>
+{% endblock %}

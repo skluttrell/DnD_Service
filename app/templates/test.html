@@ -1,0 +1,26 @@
+﻿{% extends "base.html" %}
+
+{% block script_content %}
+	$(document).ready(function() {
+		$("#bttn1").click(function() {
+			$.post("/_get_data", { "name": "dwarf", "type": "race", "data_request": "subrace_names" }).done(function(data) {
+				if (data != null) {
+					$("#sub_type").children("option:not(:first)").remove();
+					$("#text").html(data);
+					var $list = data.split("|");
+					$.each($list, function(key, value) {
+						$("#sub_type").append($("<option></option>").attr("value", value).text(value));
+					});
+				};
+			});
+		});
+	});
+{% endblock %}
+
+{% block app_content %}
+<span id="text"></span><br />
+<button id="bttn1">click me</button><br />
+	<select id="sub_type">
+		<option value="">--select--</option>
+	</select><br />
+{% endblock %}

@@ -1,0 +1,96 @@
+﻿{% extends "base.html" %}
+
+{% block script_content %}
+	function SwitchTab(tab) {
+		$("#bio").hide();
+		$("#stats").hide();
+		$("#features").hide();
+		$("#spells").hide();
+		$("#inventory").hide();
+
+		if (tab == "bio") {
+			$("#bio").show();
+		} elif (tab == "stats") {
+			$("#stats").show();
+		} elif (tab == "features") {
+			$("#features").show();
+		};
+	};
+{% endblock %}
+
+{% block app_content %}
+	<table id="tabs">
+		<tbody>
+			<tr><td><a href="javascript:SwitchTab('bio')">Biography</a></td>
+			<tr><td><a href="javascript:SwitchTab('stats')">Basic stats</a></td>
+			<td><a href="javascript:SwitchTab('features')">Features</a></td>
+			<td><a href="javascript:SwitchTab('spells')">Spells</a></td>
+			<td><a href="javascript:SwitchTab('inventory')">Inventory</a></td></tr>
+		</tbody>
+	</table>
+	<span id="bio" hidden="false">
+		<p><h1 id="character_name">{{ character.name }}</h1></p>
+		<p>{{ race.name }} class list goes here</p>
+	<p>{{ character.alignment }}</p>
+	<p>Languages: {{ character.languages }}</p>
+	<p><h2>Appearance</h2></p>
+	<p>Height and weight: {{ character.height }} ({{ character.weight }})</p>
+	<p>Age: {{ character.age }}</p>
+	<p>{{ if not character.eye_color == None }}Eyes: {{ character.eye_color }} {{ endif }}{{ if not character.hair_color == None }}Hair: {{ character.hair_color }}{{ endif }}</p>
+	<p>Description:<br />{{ character.description }}</p>
+	<p><h2>Background</h2></p>
+	<p>{{ character.background }}</p>
+	<p>Personality traits: {{ character.personality }}</p>
+	<p>Ideals: {{ character.ideals }}</p>
+	<p>Bonds: {{ character.bonds }}</p>
+	<p>Flaws: {{ character.flaws }}</p>
+	</span>
+	<span id="stats" hidden="true">
+		<table id="ability_scores">
+			<caption><h2>Ability scores</h2></caption>
+			<thead>
+				<tr><th></th><th>Base</th><th>Modifier</th><th>Check/Save</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>Strength</td><td>{{ character.strength }}</td><td>{{ strength_mod }}</td><td>{{ strength_save }}</td></tr>
+				<tr><td>Dexterity</td><td>{{ character.dexterity }}</td><td>{{ dexterity_mod }}</td><td>{{ dexterity_save }}</td></tr>
+				<tr><td>Constitution</td><td>{{ character.constitution }}</td><td>{{ constitution_mod }}</td><td>{{ constitution_save }}</td></tr>
+				<tr><td>Intelligence</td><td>{{ character.intelligence }}</td><td>{{ intelligence_mod }}</td><td>{{ intelligence_save }}</td></tr>
+				<tr><td>Wisdom</td><td>{{ character.wisdom }}</td><td>{{ wisdom_mod }}</td><td>{{ wisdom_save }}</td></tr>
+				<tr><td>charisma</td><td>{{ character.charisma }}</td><td>{{ charisma_mod }}</td><td>{{ charisma_save }}</td></tr>
+			</tbody>
+		<table id="combat_stats">
+			<caption><h2>Combat stats</h2></caption>
+			<tbody>
+				<tr><td>Initiative</td><td>{{ dexterity_mod }}</td></tr>
+				<tr><td>Hit points</td><td>Max: {{ character.hit_points }} Current: <input id="cur_hp" size="4" type="number" value="{{ character.current_hit_points }}></td></tr>
+				<tr><td>Hit dice</td><td>{{ character.hit_dice }}</td></tr>
+				<tr><td>Armor class</td><td> armor_class }}</td></tr>
+				<tr><td>Speed</td><td>{{ speed }} ft.</td></tr>
+				<tr><td>Passive perception</td><td>{{ (10 + wisdom_mod) }}</td></tr>
+			</tbody>
+		</table>
+		</table>
+		<table id="weapons">
+			<caption><h2>Weapons</h2></caption>
+			<thead>
+				<tr><th>Name</th><th>Modifier</th><th>Damage roll</th><thProperties></th><th>Range</th></tr>
+			</thead>
+			<tbody>
+				{{ for w in weapons %}
+					<tr><td>{{ w.name }}</td><td>{{ w.hit_modifier }}</td><td>{{ w.damage_roll }} ({{ w.damage_type }})</td><td>{{ w.properties }}</td><td>{{ w.range }}</td></tr>
+				{{ endfor %}
+			</tbody>
+		</table>
+	</span>
+	<span id="features" hidden="true">
+		<p><h1>Features</h1></p>
+	</span>
+	<span id="spells" hidden="true">
+		<p><h1>Spells</h1></p>
+	</span>
+	<span id="inventory" hidden="true">
+		<p><h1>Inventory</h1></p>
+		<p><h2>Gold: 1e 10g 5s 2c }}</h2></p>
+	</span>
+{% endblock %}

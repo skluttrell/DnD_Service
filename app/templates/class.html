@@ -1,0 +1,11 @@
+﻿{% extends "base.html" %}
+{% block script_content %}
+	{% include "js/script.js" %}
+{% endblock %}
+{% block app_content %}
+<p>
+<h1>{{ c.name }}</h1>
+{% include '_class_table.html' %}
+<div id="description"></div>
+</p>
+{% endblock %}

@@ -1,0 +1,51 @@
+﻿{% extends "base.html" %}
+
+{% block script_content %}
+	$(document).ready(function() {
+		var $nav = "";
+		var $listHead = "";
+
+		$nav += "<div id=\"top\"><h1>Sorted by: ";
+		{% if sort == "alpha" %}
+			$nav += "alphabet";
+		{% else %}
+			var $sortFilters = sort.split("|");
+			for (i = 0; i < $sortFilters.length; i++) {
+				$nav += sortFilters[i].split("=")[1];
+				if (i < sortFilters.length - 1) { $nav += " > "; };
+			};
+
+		{% endif %}
+		$nav += "</h1></div><br />";
+
+		var $alphabet = "zyxwvutsrqponmlkjihgfedcba";
+		var $alphaLen = $alphabet.length
+		var $lCnt = $alphaLen;
+		$nav += "<a href=\"#top\">Back to top</a>";
+		while ($lCnt--) {
+			if ($lCnt < $alphaLen) { $nav = $nav + "|"; };
+			$nav += "<a href=\"#" + $alphabet.charAt($lCnt) + "\">" + $alphabet.charAt($lCnt) + "<\a>";
+		};
+		$lCnt = $alphaLen;
+		while ($lCnt--) {
+			$listHead += $nav + "<br /><br /><div id=\"" + $alphabet.charAt($lCnt) + "\"></div><br /";
+		};
+		$("#list").html($listHead);
+		{% for spell in spells %}
+			var $name = "{{ spell }}".replace("/", "_");
+			$("#{{ spell[0] }}").append("<a href=\"spell/" + $name + "\">{{ spell }}</a><br />");
+		{% endfor %}
+	});
+{% endblock %}
+
+{% block app_content %}
+	<p>
+		Sorting options:
+		<a href="/spells?sort=alpha">alphabetical</a>
+		<form action="" method="post" novalidate>
+			{{ form.hidden_tag() }}
+			{{ form.origin_filter() }} {{ form.class_filter() }} {{ form.school_filter() }} {{ form.submit() }}
+		</form>
+	</p><br />
+	<p id="list"></p>
+{% endblock %}

@@ -1,0 +1,247 @@
+<table>
+<thead>
+<tr>
+<th{% if not c.discreet_level_features[19].slots_for_1st == None %} rowspan="2"{% endif %}>
+level
+</th>
+<th{% if not c.discreet_level_features[19].slots_for_1st == None %} rowspan="2"{% endif %}>
+Proficiency Bonus
+</th>
+{% if not c.discreet_level_features[19].martial_arts == None %}
+<th{% if not c.discreet_level_features[19].slots_for_1st == None %} rowspan="2"{% endif %}>
+Martial Arts
+</th>
+{% endif %}
+{% if not c.discreet_level_features[19].ki_points == None %}
+<th{% if not c.discreet_level_features[19].slots_for_1st == None %} rowspan="2"{% endif %}>
+Ki Points
+</th>
+{% endif %}
+{% if not c.discreet_level_features[19].unarmored_movement == None %}
+<th{% if not c.discreet_level_features[19].slots_for_1st == None %} rowspan="2"{% endif %}>
+Unarmored Movement
+</th>
+{% endif %}
+{% if not c.discreet_level_features[19].sneak_attack == None %}
+<th{% if not c.discreet_level_features[19].slots_for_1st == None %} rowspan="2"{% endif %}>
+Sneak Attack
+</th>
+{% endif %}
+{% if not c.discreet_level_features[19].sorcerer_points == None %}
+<th{% if not c.discreet_level_features[19].slots_for_1st == None %} rowspan="2"{% endif %}>
+Sorcerer Points
+</th>
+{% endif %}
+<th{% if not c.discreet_level_features[19].slots_for_1st == None %} rowspan="2"{% endif %}>
+Features
+</th>
+{% if not c.discreet_level_features[19].rages == None %}
+<th{% if not c.discreet_level_features[19].slots_for_1st == None %} rowspan="2"{% endif %}>
+Rages
+</th>
+{% endif %}
+{% if not c.discreet_level_features[19].rage_damage == None %}
+<th{% if not c.discreet_level_features[19].slots_for_1st == None %} rowspan="2"{% endif %}>
+Rage Damage
+</th>
+{% endif %}
+{% if not c.discreet_level_features[19].cantrips_known == None %}
+<th{% if not c.discreet_level_features[19].slots_for_1st == None %} rowspan="2"{% endif %}>
+Cantrips Known
+</th>
+{% endif %}
+{% if not c.discreet_level_features[19].spells_known == None %}
+<th{% if not c.discreet_level_features[19].slots_for_1st == None %} rowspan="2"{% endif %}>
+Spells Known
+</th>
+{% endif %}
+{% if not c.discreet_level_features[19].spell_slots == None %}
+<th{% if not c.discreet_level_features[19].slots_for_1st == None %} rowspan="2"{% endif %}>
+Spell Slots
+</th>
+{% endif %}
+{% if not c.discreet_level_features[19].slot_level == None %}
+<th{% if not c.discreet_level_features[19].slots_for_1st == None %} rowspan="2"{% endif %}>
+Slot Level
+</th>
+{% endif %}
+{% if not c.discreet_level_features[19].invocations_known == None %}
+<th{% if not c.discreet_level_features[19].slots_for_1st == None %} rowspan="2"{% endif %}>
+Invocations Known
+</th>
+{% endif %}
+{% if not c.discreet_level_features[19].slots_for_1st == None %}
+<th colspan="9">
+Spell Slots Per Spell Level
+</th>
+</tr><tr>
+{% if not c.discreet_level_features[19].slots_for_1st == None %}
+<th id="1st level">1st</th>
+{% endif %}
+{% if not c.discreet_level_features[19].slots_for_2nd == None %}
+<th id="2nd level">2nd</th>
+{% endif %}
+{% if not c.discreet_level_features[19].slots_for_3rd == None %}
+<th id="3rd level">3rd</th>
+{% endif %}
+{% if not c.discreet_level_features[19].slots_for_4th == None %}
+<th id="4th level">4th</th>
+{% endif %}
+{% if not c.discreet_level_features[19].slots_for_5th == None %}
+<th id="5th level">5th</th>
+{% endif %}
+{% if not c.discreet_level_features[19].slots_for_6th == None %}
+<th id="6th level">6th</th>
+{% endif %}
+{% if not c.discreet_level_features[19].slots_for_7th == None %}
+<th id="7th level">7th</th>
+{% endif %}
+{% if not c.discreet_level_features[19].slots_for_8th == None %}
+<th id="8th level">8th</th>
+{% endif %}
+{% if not c.discreet_level_features[19].slots_for_9th == None %}
+<th id="9th level">9th</th>
+{% endif %}
+{% endif %}
+</tr>
+</thead>
+<tbody>
+{% for d in c.discreet_level_features %}
+<tr>
+<td>{{ d.level }}{% if d.level == 1 %}st{% elif d.level == 2 %}nd{% elif d.level == 3 %}rd{% else %}th{% endif %}</td>
+<td>
+{% if 1 <= d.level <= 4 %}+2
+{% elif 5 <= d.level <= 8 %}+3
+{% elif 9 <= d.level <= 12 %}+4
+{% elif 13 <= d.level <= 16 %}+5
+{% elif 17 <= d.level <= 20 %}+6
+{% endif %}
+</td>
+{% if not d.martial_arts == None %}
+<td>{{ d.martial_arts }}</td>
+{% endif %}
+{% if not d.ki_points == None %}
+<td>{{ d.ki_points }}</td>
+{% endif %}
+{% if not d.unarmored_movement == None %}
+<td>{{ d.unarmored_movement }}</td>
+{% endif %}
+{% if not d.sneak_attack == None %}
+<td>{{ d.sneak_attack }}</td>
+{% endif %}
+{% if not d.sorcerer_points == None %}
+<td>{{ d.sorcerer_points }}</td>
+{% endif %}
+{% if not d.features == None %}
+<td>{{ d.features }}</td>
+{% else %}
+<td>&#8211;</td>
+{% endif %}
+{% if not d.rages == None %}
+<td>{{ d.rages }}</td>
+{% endif %}
+{% if not d.rage_damage == None %}
+<td>{{ d.rage_damage }}</td>
+{% endif %}
+{% if not d.cantrips_known == None %}
+<td>{{ d.cantrips_known }}</td>
+{% endif %}
+{% if not d.spells_known == None %}
+<td>{{ d.spells_known }}</td>
+{% elif not c.discreet_level_features[19].spells_known == None %}
+<td>&#8211;</td>
+{% endif %}
+{% if not d.spell_slots == None %}
+<td>{{ d.spell_slots }}</td>
+{% endif %}
+{% if not d.slot_level == None %}
+<td>{{ d.slot_level }}</td>
+{% endif %}
+{% if not d.invocations_known == None %}
+<td>{{ d.invocations_known }}</td>
+{% endif %}
+{% if not c.discreet_level_features[19].slots_for_1st == None %}
+<td header="1st level">
+{% if not d.slots_for_1st == None %}
+{{ d.slots_for_1st }}
+{% else %}
+&#8211;
+{% endif %}
+</td>
+{% endif %}
+{% if not c.discreet_level_features[19].slots_for_2nd == None %}
+<td header="2nd level">
+{% if not d.slots_for_2nd == None %}
+{{ d.slots_for_2nd }}
+{% else %}
+&#8211;
+{% endif %}
+</td>
+{% endif %}
+{% if not c.discreet_level_features[19].slots_for_3rd == None %}
+<td header="3rd level">
+{% if not d.slots_for_3rd == None %}
+{{ d.slots_for_3rd }}
+{% else %}
+&#8211;
+{% endif %}
+</td>
+{% endif %}
+{% if not c.discreet_level_features[19].slots_for_4th == None %}
+<td header="4th level">
+{% if not d.slots_for_4th == None %}
+{{ d.slots_for_4th }}
+{% else %}
+&#8211;
+{% endif %}
+</td>
+{% endif %}
+{% if not c.discreet_level_features[19].slots_for_5th == None %}
+<td header="5th level">
+{% if not d.slots_for_5th == None %}
+{{ d.slots_for_5th }}
+{% else %}
+&#8211;
+{% endif %}
+</td>
+{% endif %}
+{% if not c.discreet_level_features[19].slots_for_6th == None %}
+<td header="6th level">
+{% if not d.slots_for_6th == None %}
+{{ d.slots_for_6th }}
+{% else %}
+&#8211;
+{% endif %}
+</td>
+{% endif %}
+{% if not c.discreet_level_features[19].slots_for_7th == None %}
+<td header="7th level">
+{% if not d.slots_for_7th == None %}
+{{ d.slots_for_7th }}
+{% else %}
+&#8211;
+{% endif %}
+</td>
+{% endif %}
+{% if not c.discreet_level_features[19].slots_for_8th == None %}
+<td header="8th level">
+{% if not d.slots_for_8th == None %}
+{{ d.slots_for_8th }}
+{% else %}
+&#8211;
+{% endif %}
+</td>
+{% endif %}
+{% if not c.discreet_level_features[19].slots_for_9th == None %}
+<td header="9th level">
+{% if not d.slots_for_9th == None %}
+{{ d.slots_for_9th }}
+{% else %}
+&#8211;
+{% endif %}
+</td>
+{% endif %}
+</tr>
+{% endfor %}
+</tbody>
+</table>

@@ -1,0 +1,87 @@
+﻿{% extends "base.html" %}
+
+{% block script_content %}
+	$(document).ready(function() {
+		$("#race").change(function() {
+			$.post("/_get_data", { "name": $("#race").val(), "type": "race", "data_request": "subrace_names" }).done(function(data) {
+				if (data != "") {
+					$("#subrace").children("option:not(:first)").remove();
+					var $list = data.split("|");
+					$.each($list, function(key, value) {
+						$("#subrace").append($("<option></option>").attr("value", value).text(value));
+					});
+					$("#subrace_form_field").show();
+				} else {
+					$("#subrace_form_field").hide();
+				};
+			});
+		});
+	});
+{% endblock %}
+
+{% block app_content %}
+	<span id="test"></span>
+	<h1>Create your character</h1>
+	<form action="" method="post" novalidate>
+		{{ form.hidden_tag() }}
+		<p>
+			{{ form.name.label }}: {{ form.name(size=32) }} 
+			{% for error in form.name.errors %}
+				<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			Select a race: 
+			{{ form.race() }} 
+		</p>
+		<p id="subrace_form_field" hidden="true">
+			<span id="subrace_label"></span>: 
+			Select a subrace: 
+			{{ form.subrace() }}
+		</p>
+		<p>
+			Select a class: 
+			{{ form.character_class() }} 
+		</p>
+		<p><h2>Base Stats</h2></p>
+		<p>
+			{{ form.strength.label }}{{ form.strength(size=2) }}
+			{% for error in form.strength.errors %}
+				<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			{{ form.dexterity.label }}{{ form.dexterity(size=2) }}
+			{% for error in form.dexterity.errors %}
+				<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			{{ form.constitution.label }}{{ form.constitution(size=2) }}
+			{% for error in form.constitution.errors %}
+				<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			{{ form.intelligence.label }}{{ form.intelligence(size=2) }}
+			{% for error in form.intelligence.errors %}
+				<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			{{ form.wisdom.label }}{{ form.wisdom(size=2) }}
+			{% for error in form.wisdom.errors %}
+				<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			{{ form.charisma.label }}{{ form.charisma(size=2) }}
+			{% for error in form.charisma.errors %}
+				<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+
+		<p>{{ form.submit() }}</p>
+	</form>
+	<span id="post_data"></span>
+{% endblock %}
