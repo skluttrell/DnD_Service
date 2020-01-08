@@ -1,0 +1,21 @@
+# Dice rolling wigit
+Use random.org to generate true random rolls
+Default to best possible pseudo-random generator
+# User interface
+Password protected
+Allow storage of multiple characters
+User bio
+Private message system
+Friends and block list
+Post center to allow for short messages
+# Dungeon master and session tools
+~ Map and character locations interface (Both world and battle maps)
+Save session data and notes
+Training mode that users can opt in to which allows the DM more access to individual character sheets to guid or help update levels
+Time stamped session notes and logging
+# Character sheets and new character creation page
+Multitabbed page which presents character data in an easy to navigate manner
+Bio tab - Character's name, main abilities, background information
+Feats and Skills tab
+Inventory tab - list current inventory, gold, and currently equipt weapons and armor
+Spells tab - Spells and armed spell slots
