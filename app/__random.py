@@ -8,8 +8,9 @@ class RandomOrg:
 		self.code = None
 		self.alert = None
 		self._http = urllib3.PoolManager()
+		self._dontResetVariables = False
 
-	def __gen_url(type: str='integers', num: int=1, min: int=1, max: int=2, col: int=1, len: int=10, digits: str='on', upperalpha: str='on', loweralpha: str='on', unique: str='on', base: int=10, format: str='plain', rnd: str='new') -> str:
+	def __gen_url(self, type: str='integers', num: int=1, min: int=1, max: int=2, col: int=1, len: int=10, digits: str='on', upperalpha: str='on', loweralpha: str='on', unique: str='on', base: int=10, format: str='plain', rnd: str='new') -> str:
 		# PRIVATE METHOD: Returns a random.org url for the requested data
 
 		if type == 'int': type = 'integers'
@@ -101,23 +102,26 @@ class RandomOrg:
 		# Random.org has a limit of 100,000 bytes and will not allow requests if this number is negative
 		# Each IP is given at least 20,000 top-up bytes at midnight
 		# If the quota is below zero (0) bytes than this method calls a local pseudo random generator by default
-		if get_quota() < 0:
+		if not self.get_quota():
 			self.code = 601
-			self.alert = 'This IP has reached its bytes quota on random.org, defaulting to pseudo random.'
-			return get_pseudo_random(type, num, max, col, len, digits, upperalpha, loweralpha, unique, base)
+			self.alert = 'Error: random.org is unable to fulfill the request, defaulting to pseudo random.'
+			self._dontResetVariables = True
+			return self.get_pseudo_random(type, num, min, max, col, len, digits, upperalpha, loweralpha, unique, base)
 
 		# Resets the class variables
 		self.data = None
 		self.code = None
 		self.alert = None
-		self._requestURL = gen_url(type, num, min, max, col, len, digits, upperalpha, loweralpha, unique, base, format, rnd)
+		requestURL = self.__gen_url(type, num, min, max, col, len, digits, upperalpha, loweralpha, unique, base, format, rnd)
 		request = self._http.request('GET', requestURL)
 		self.code = request.status
 		self.data = request.data.decode('utf-8').split()
-		if self.code != 200: self.alert = self.data[0] # Something went wrong
+		if self.code != 200:
+			self.alert = ''.join(map(str, self.data)) # Something went wrong
+			self.data = None
 
 	def get_pseudo_random(self, type: str='integers', num: int=1, min: int=1, max: int=2, col: int=1, len: int=10, digits: str='on', upperalpha: str='on', loweralpha: str='on', unique: str='on', base: int=10) -> int or str:
-		"""Generates a true random number from random.org
+		"""Generates a pseudo random number from a local resource
 
 		Parameters
 		----------
@@ -162,8 +166,11 @@ class RandomOrg:
 		"""
 
 		self.data = None
-		self.code = None
-		self.alert = None
+		if self._dontResetVariables:
+			self._dontResetVariables = False
+		else:
+			self.code = None
+			self.alert = None
 
 		if type == 'integers':
 			integers = []
@@ -186,8 +193,9 @@ class RandomOrg:
 			for i in range(0, num): strings.append(''.join(random.choice(alphaNum) for x in range(len)))
 			self.data = strings
 
-	def get_quota(self):
-		"""Returns the random.org quota for this IP"""
+	def get_quota(self) -> bool:
+		"""Checks to see if random.org is available"""
 
 		request = self._http.request('GET', 'https://www.random.org/quota/?format=plain')
-		if request.status == 200: return int(request.data.decode('utf-8'))
+		if request.status != 200 or int(request.data.decode('utf-8')) < 0: return False
+		return True
